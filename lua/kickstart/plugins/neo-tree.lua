@@ -11,15 +11,15 @@ return {
   },
   lazy = false,
   keys = {
-    { '\\', ':Neotree reveal<CR>', desc = 'NeoTree reveal', silent = true },
+    { '<C-n>', ':Neotree toggle<CR>', desc = 'NeoTree toggle', silent = true },
+    { '<leader>ds', ':Neotree document_symbols<CR>', desc = 'NeoTree document symbols', silent = true },
+    { '<leader>bb', ':Neotree buffers<CR>', desc = 'NeoTree buffers', silent = true },
   },
   opts = {
-    filesystem = {
-      window = {
-        mappings = {
-          ['\\'] = 'close_window',
-        },
-      },
+    sources = {
+      "filesystem",
+      "buffers",
+      "document_symbols",
     },
   },
 }
