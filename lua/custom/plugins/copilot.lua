@@ -17,7 +17,7 @@ return {
     vim.keymap.set('n', '<leader>ct', toggle_copilot, { desc = 'Toggle GitHub Copilot' })
 
     -- Optional: Disable by default on startup if you prefer
-    -- vim.g.copilot_enabled = 0
+    vim.g.copilot_enabled = 1
   end,
 }
 

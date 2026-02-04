@@ -4,7 +4,7 @@ return {
     dependencies = {
       { 'nvim-lua/plenary.nvim', branch = 'master' },
     },
-    build = 'make tiktoken',
+    -- build = 'make tiktoken',
     opts = {
       -- See Configuration section for options
       headers = {
@@ -25,7 +25,7 @@ return {
       { '<leader>zd', '<cmd>CopilotChatDocs<cr>', mode = 'v', desc = 'CopilotChat - Generate docs' },
       { '<leader>zt', '<cmd>CopilotChatTests<cr>', mode = 'v', desc = 'CopilotChat - Generate tests' },
       { '<leader>zq', '<cmd>CopilotChatClose<cr>', desc = 'CopilotChat - Close' },
-      { '<leader>zz', '<cmd>CopilotChatReset<cr>', desc = 'CopilotChat - Reset' },
+      { '<leader>zR', '<cmd>CopilotChatReset<cr>', desc = 'CopilotChat - Reset' },
     },
   },
 }
