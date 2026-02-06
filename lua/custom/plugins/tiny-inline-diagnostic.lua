@@ -147,5 +147,19 @@ return {
         vim.keymap.set("n", "<leader>de", "<cmd>TinyInlineDiag enable<cr>", { desc = "Enable diagnostics" })
         vim.keymap.set("n", "<leader>dd", "<cmd>TinyInlineDiag disable<cr>", { desc = "Disable diagnostics" })
         vim.keymap.set("n", "<leader>dt", "<cmd>TinyInlineDiag toggle<cr>", { desc = "Toggle diagnostics" })
+        vim.keymap.set("n", "<leader>dc", function()
+            local diagnostics = vim.diagnostic.get(0, { lnum = vim.fn.line(".") - 1 })
+            if #diagnostics > 0 then
+                local messages = {}
+                for _, diag in ipairs(diagnostics) do
+                    table.insert(messages, diag.message)
+                end
+                local text = table.concat(messages, "\n")
+                vim.fn.setreg("+", text)
+                vim.notify("Diagnostic copied to clipboard", vim.log.levels.INFO)
+            else
+                vim.notify("No diagnostic on this line", vim.log.levels.WARN)
+            end
+        end, { desc = "Copy diagnostic to clipboard" })
     end
 }
