@@ -164,6 +164,7 @@ vim.o.expandtab = true      -- Use spaces instead of tabs
 vim.o.shiftwidth = 2        -- Number of spaces for auto-indent
 vim.o.tabstop = 2           -- Number of spaces a tab counts for
 vim.o.softtabstop = 2       -- Number of spaces a tab counts for while editing
+vim.o.smartindent = false   -- Avoid conflicts with language-specific indentation (e.g., Python)
 
 -- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
 -- instead raise a dialog asking if you wish to save the current file(s)
@@ -925,7 +926,10 @@ local filetypes = {
       require('nvim-treesitter').install(filetypes)
       vim.api.nvim_create_autocmd('FileType', {
         pattern = filetypes,
-        callback = function() vim.treesitter.start() end,
+        callback = function()
+          vim.treesitter.start()
+          vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        end,
       })
     end,
   },
