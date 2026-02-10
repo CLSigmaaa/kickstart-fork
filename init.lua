@@ -633,6 +633,25 @@ require('lazy').setup({
             },
           },
         },
+        sonarlint = {
+          filetypes = {
+            'javascript',
+            'typescript',
+          },
+          settings = {
+            sonarlint = {
+              -- Optionnel : connecter à SonarQube/SonarCloud
+              -- connectedMode = {
+              --   servers = {
+              --     {
+              --       serverId = "mon-serveur",
+              --       serverUrl = "https://sonarqube.example.com"
+              --     }
+              --   }
+              -- }
+            }
+          }
+        },
         sqlls = {},
         bashls = {},
       }
@@ -660,6 +679,7 @@ require('lazy').setup({
         'bash-language-server',
         -- Formatters & other tools
         'stylua',
+        'sonarlint-language-server',
       }
 
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }

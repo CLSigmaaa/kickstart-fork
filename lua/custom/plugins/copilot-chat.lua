@@ -7,6 +7,8 @@ return {
     -- build = 'make tiktoken',
     opts = {
       -- See Configuration section for options
+      model = 'claude-opus-4.6',
+      resources = { 'buffer:listed' },
       headers = {
         user = '👤 You',
         assistant = '🤖 Copilot',
@@ -15,7 +17,22 @@ return {
 
       separator = '━━',
       auto_fold = true, -- Automatically folds non-assistant messages
+      highlight_headers = true,
+
+      -- Enable syntax highlighting in code blocks
+      chat_autocomplete = true,
     },
+    config = function(_, opts)
+      require('CopilotChat').setup(opts)
+
+      -- Force treesitter highlighting on CopilotChat buffers
+      vim.api.nvim_create_autocmd('BufEnter', {
+        pattern = 'copilot-chat',
+        callback = function()
+          vim.treesitter.start(0, 'markdown')
+        end,
+      })
+    end,
     keys = {
       { '<leader>zr', '<cmd>CopilotChatReview<cr>', mode = 'v', desc = 'CopilotChat - Review selection' },
       { '<leader>zc', '<cmd>CopilotChatToggle<cr>', desc = 'CopilotChat - Toggle' },
