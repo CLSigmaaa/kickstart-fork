@@ -677,6 +677,9 @@ require('lazy').setup({
           filetypes = {
             'javascript',
             'typescript',
+            'javascriptreact',
+            'typescriptreact',
+            'vue',
           },
           settings = {
             sonarlint = {}
