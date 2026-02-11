@@ -164,11 +164,11 @@ vim.o.cursorline = true
 vim.o.scrolloff = 10
 
 -- Default indentation settings (for new files)
-vim.o.expandtab = true      -- Use spaces instead of tabs
-vim.o.shiftwidth = 2        -- Number of spaces for auto-indent
-vim.o.tabstop = 2           -- Number of spaces a tab counts for
-vim.o.softtabstop = 2       -- Number of spaces a tab counts for while editing
-vim.o.smartindent = false   -- Avoid conflicts with language-specific indentation (e.g., Python)
+vim.o.expandtab = true -- Use spaces instead of tabs
+vim.o.shiftwidth = 2 -- Number of spaces for auto-indent
+vim.o.tabstop = 2 -- Number of spaces a tab counts for
+vim.o.softtabstop = 2 -- Number of spaces a tab counts for while editing
+vim.o.smartindent = false -- Avoid conflicts with language-specific indentation (e.g., Python)
 
 -- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
 -- instead raise a dialog asking if you wish to save the current file(s)
@@ -360,7 +360,7 @@ require('lazy').setup({
         -- `build` is used to run some command when the plugin is installed/updated.
         -- This is only run then, not every time Neovim starts up.
         build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
-        
+
         -- `cond` is a condition used to determine whether this plugin should be
         -- installed and loaded.
         cond = function() return vim.fn.executable 'cmake' == 1 end,
@@ -566,10 +566,10 @@ require('lazy').setup({
           -- When you move your cursor, the highlights will be cleared (the second autocommand).
           local client = vim.lsp.get_client_by_id(event.data.client_id)
 
-           -- Inlay Hint Toggle Keymap
+          -- Inlay Hint Toggle Keymap
           if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
             vim.keymap.set('n', '<leader>th', function()
-              local current = vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf })
+              local current = vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }
               vim.lsp.inlay_hint.enable(not current, { bufnr = event.buf })
             end, { buffer = event.buf, desc = 'oggle Inlay [H]ints' })
 
@@ -673,7 +673,7 @@ require('lazy').setup({
             typescript = {
               -- It is generally safer to point this to the globally installed TS or the workspace version.
               -- If this path works for you, keep it. Otherwise, vtsls usually auto-detects this.
-              tsdk = vim.fn.stdpath 'data'.. '/mason/packages/typescript-language-server/node_modules/typescript/lib',
+              tsdk = vim.fn.stdpath 'data' .. '/mason/packages/typescript-language-server/node_modules/typescript/lib',
             },
           },
         },
@@ -686,7 +686,7 @@ require('lazy').setup({
             'vue',
           },
           settings = {
-            sonarlint = {}
+            sonarlint = {},
           },
         },
         sqlls = {},
@@ -816,12 +816,10 @@ require('lazy').setup({
           -- `friendly-snippets` contains a variety of premade snippets.
           --    See the README about individual language/framework/plugin snippets:
           --    https://github.com/rafamadriz/friendly-snippets
-          -- {
-          --   'rafamadriz/friendly-snippets',
-          --   config = function()
-          --     require('luasnip.loaders.from_vscode').lazy_load()
-          --   end,
-          -- },
+          {
+            'rafamadriz/friendly-snippets',
+            config = function() require('luasnip.loaders.from_vscode').lazy_load() end,
+          },
         },
         opts = {},
       },
@@ -955,7 +953,7 @@ require('lazy').setup({
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     config = function()
-local filetypes = {
+      local filetypes = {
         'bash',
         'c',
         'diff',
@@ -1044,3 +1042,4 @@ local filetypes = {
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+
