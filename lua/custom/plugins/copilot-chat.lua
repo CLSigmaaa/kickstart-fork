@@ -7,7 +7,7 @@ return {
     -- build = 'make tiktoken',
     opts = {
       -- See Configuration section for options
-      model = 'claude-opus-4.6',
+      model = 'auto',
       resources = { 'buffer:listed' },
       headers = {
         user = '👤 You',
