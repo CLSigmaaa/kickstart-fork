@@ -561,6 +561,18 @@ require('lazy').setup({
           --
           -- When you move your cursor, the highlights will be cleared (the second autocommand).
           local client = vim.lsp.get_client_by_id(event.data.client_id)
+
+           -- Inlay Hint Toggle Keymap
+          if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
+            vim.keymap.set('n', '<leader>th', function()
+              local current = vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf })
+              vim.lsp.inlay_hint.enable(not current, { bufnr = event.buf })
+            end, { buffer = event.buf, desc = 'oggle Inlay [H]ints' })
+
+            -- UNCOMMENT TO ENABLE BY DEFAULT:
+            -- vim.lsp.inlay_hint.enable(true, { bufnr = event.buf })
+          end
+
           if client and client:supports_method('textDocument/documentHighlight', event.buf) then
             local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
             vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
@@ -594,6 +606,8 @@ require('lazy').setup({
         end,
       })
 
+      vim.api.nvim_set_hl(0, 'LspInlayHint', { link = 'Comment' })
+
       -- LSP servers and clients are able to communicate to each other what features they support.
       --  By default, Neovim doesn't support everything that is in the LSP specification.
       --  When you add blink.cmp, luasnip, etc. Neovim now has *more* capabilities.
@@ -613,23 +627,49 @@ require('lazy').setup({
         jsonls = {},
         yamlls = {},
         eslint = {},
-        ts_ls = {
-          init_options = {
-            plugins = {
-              {
-                name = '@vue/typescript-plugin',
-                location = vim.fn.stdpath 'data' .. '/mason/packages/vue-language-server/node_modules/@vue/language-server',
-                languages = { 'vue' },
+        vtsls = {
+          -- Explicitly add these filetypes so it attaches to Vue files
+          filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+          settings = {
+            vtsls = {
+              tsserver = {
+                globalPlugins = {
+                  {
+                    name = '@vue/typescript-plugin',
+                    location = vim.fn.stdpath 'data' .. '/mason/packages/vue-language-server/node_modules/@vue/language-server',
+                    languages = { 'vue' },
+                    configNamespace = 'typescript',
+                    enableForWorkspaceTypeScriptVersions = true,
+                  },
+                },
+              },
+            },
+            typescript = {
+              updateImportsOnFileMove = { enabled = 'always' },
+              suggest = {
+                completeFunctionCalls = true,
+              },
+              inlayHints = {
+                enumMemberValues = { enabled = true },
+                functionLikeReturnTypes = { enabled = true },
+                parameterNames = { enabled = 'literals' },
+                parameterTypes = { enabled = true },
+                propertyDeclarationTypes = { enabled = true },
+                variableTypes = { enabled = false }, -- changing to false often helps performance
               },
             },
           },
-          filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
         },
         vue_ls = {
-          filetypes = { 'vue'},
+          filetypes = { 'vue' },
           init_options = {
+            vue = {
+              hybridMode = false, -- Keep this as false since we are manually setting up vtsls
+            },
             typescript = {
-              tsdk = vim.fn.stdpath 'data' .. '/mason/packages/typescript-language-server/node_modules/typescript/lib',
+              -- It is generally safer to point this to the globally installed TS or the workspace version.
+              -- If this path works for you, keep it. Otherwise, vtsls usually auto-detects this.
+              tsdk = vim.fn.stdpath 'data'.. '/mason/packages/typescript-language-server/node_modules/typescript/lib',
             },
           },
         },
@@ -639,18 +679,8 @@ require('lazy').setup({
             'typescript',
           },
           settings = {
-            sonarlint = {
-              -- Optionnel : connecter à SonarQube/SonarCloud
-              -- connectedMode = {
-              --   servers = {
-              --     {
-              --       serverId = "mon-serveur",
-              --       serverUrl = "https://sonarqube.example.com"
-              --     }
-              --   }
-              -- }
-            }
-          }
+            sonarlint = {}
+          },
         },
         sqlls = {},
         bashls = {},
@@ -671,6 +701,7 @@ require('lazy').setup({
         'dockerfile-language-server',
         'docker-compose-language-service',
         'json-lsp',
+        'vtsls',
         'yaml-language-server',
         'eslint-lsp',
         'typescript-language-server',
