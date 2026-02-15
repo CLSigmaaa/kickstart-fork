@@ -8,7 +8,6 @@ return {
     opts = {
       -- See Configuration section for options
       model = 'auto',
-      resources = { 'buffer:listed' },
       headers = {
         user = '👤 You',
         assistant = '🤖 Copilot',
@@ -28,9 +27,7 @@ return {
       -- Force treesitter highlighting on CopilotChat buffers
       vim.api.nvim_create_autocmd('BufEnter', {
         pattern = 'copilot-chat',
-        callback = function()
-          vim.treesitter.start(0, 'markdown')
-        end,
+        callback = function() vim.treesitter.start(0, 'markdown') end,
       })
     end,
     keys = {
@@ -43,6 +40,15 @@ return {
       { '<leader>zt', '<cmd>CopilotChatTests<cr>', mode = 'v', desc = 'CopilotChat - Generate tests' },
       { '<leader>zq', '<cmd>CopilotChatClose<cr>', desc = 'CopilotChat - Close' },
       { '<leader>zR', '<cmd>CopilotChatReset<cr>', desc = 'CopilotChat - Reset' },
+      {
+        '<leader>za',
+        function()
+          local input = vim.fn.input 'Ask about selection: '
+          if input ~= '' then require('CopilotChat').ask(input) end
+        end,
+        mode = 'v',
+        desc = 'Chat: Ask about selection',
+      },
     },
   },
 }
