@@ -689,6 +689,38 @@ require('lazy').setup({
             sonarlint = {},
           },
         },
+        tailwindcss = {
+          filetypes = {
+            'html',
+            'css',
+            'scss',
+            'javascript',
+            'javascriptreact',
+            'typescript',
+            'typescriptreact',
+            'vue',
+          },
+          settings = {
+            tailwindCSS = {
+              classAttributes = { 'class', 'className', 'classList', 'ngClass' },
+              lint = {
+                cssConflict = 'warning',
+                invalidApply = 'error',
+                invalidConfigPath = 'error',
+                invalidTailwindDirective = 'error',
+                recommendedVariantOrder = 'warning',
+              },
+              validate = true,
+              experimental = {
+                classRegex = {
+                  { 'cva\\(([^)]*)\\)', '["\'`]([^"\'`]*).*?["\'`]' },
+                  { 'cx\\(([^)]*)\\)', "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+                  { 'cn\\(([^)]*)\\)', '["\'`]([^"\'`]*).*?["\'`]' },
+                },
+              },
+            },
+          },
+        },
         sqlls = {},
         bashls = {},
       }
@@ -715,6 +747,7 @@ require('lazy').setup({
         'vue-language-server',
         'sqlls',
         'bash-language-server',
+        'tailwindcss-language-server',
         -- Formatters & other tools
         'stylua',
         'sonarlint-language-server',
@@ -980,6 +1013,7 @@ require('lazy').setup({
         'regex',
         'comment',
         'gitignore',
+        'tailwindcss',
       }
       require('nvim-treesitter').install(filetypes)
       vim.api.nvim_create_autocmd('FileType', {
@@ -1042,4 +1076,3 @@ require('lazy').setup({
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
-
