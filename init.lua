@@ -678,22 +678,23 @@ require('lazy').setup({
           },
         },
         sonarlint = {
-          filetypes = {
-            'javascript',
-            'typescript',
-            'javascriptreact',
-            'typescriptreact',
-            'vue',
-          },
-          settings = {
-            sonarlint = {},
+          -- Default config according to : https://gitlab.com/schrieveslaach/sonarlint.nvim
+          server = {
+            cmd = {
+              'sonarlint-language-server',
+              -- Ensure that sonarlint-language-server uses stdio channel
+              '-stdio',
+              '-analyzers',
+              -- paths to the analyzers you need, using those for python and java in this example
+              vim.fn.expand '$MASON/share/sonarlint-analyzers/sonarjava.jar',
+              vim.fn.expand '$MASON/share/sonarlint-analyzers/sonarjs.jar',
+              vim.fn.expand '$MASON/share/sonarlint-analyzers/sonarhtml.jar',
+            },
           },
         },
         tailwindcss = {
           filetypes = {
             'html',
-            'css',
-            'scss',
             'javascript',
             'javascriptreact',
             'typescript',
