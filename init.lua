@@ -724,6 +724,9 @@ require('lazy').setup({
         },
         sqlls = {},
         bashls = {},
+        prisma_language_server = {
+          filetypes = { 'prisma' },
+        },
       }
 
       -- Ensure the servers and tools above are installed
@@ -745,6 +748,7 @@ require('lazy').setup({
         'yaml-language-server',
         'eslint-lsp',
         'typescript-language-server',
+        'prisma-language-server',
         'vue-language-server',
         'sqlls',
         'bash-language-server',
@@ -1003,6 +1007,7 @@ require('lazy').setup({
         'javascript',
         'vue',
         'tsx',
+        'prisma',
         'sql',
         'rust',
         'dockerfile',
