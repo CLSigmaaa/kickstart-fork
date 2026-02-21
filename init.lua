@@ -472,14 +472,14 @@ require('lazy').setup({
       --  See `:help telescope.builtin.live_grep()` for information about particular keys
       vim.keymap.set(
         'n',
-        '<leader>s/',
+        '<leader>f/',
         function()
           builtin.live_grep {
             grep_open_files = true,
             prompt_title = 'Live Grep in Open Files',
           }
         end,
-        { desc = '[S]earch [/] in Open Files' }
+        { desc = '[F]earch [/] in Open Files' }
       )
 
       -- Shortcut for searching your Neovim configuration files
