@@ -640,7 +640,6 @@ require('lazy').setup({
         docker_compose_language_service = {},
         jsonls = {},
         yamlls = {},
-        eslint = {},
         vtsls = {
           -- Explicitly add these filetypes so it attaches to Vue files
           filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
@@ -727,6 +726,7 @@ require('lazy').setup({
                   { 'cva\\(([^)]*)\\)', '["\'`]([^"\'`]*).*?["\'`]' },
                   { 'cx\\(([^)]*)\\)', "(?:'|\"|`)([^']*)(?:'|\"|`)" },
                   { 'cn\\(([^)]*)\\)', '["\'`]([^"\'`]*).*?["\'`]' },
+                  { '["\'`]([^"\'`]*).*?["\'`]' },
                 },
               },
             },
@@ -756,7 +756,6 @@ require('lazy').setup({
         'json-lsp',
         'vtsls',
         'yaml-language-server',
-        'eslint-lsp',
         'typescript-language-server',
         'prisma-language-server',
         'vue-language-server',
